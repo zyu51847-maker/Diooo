@@ -1,0 +1,15 @@
+{
+  "name": "auto-research-plugin",
+  "version": "1.0.0",
+  "description": "Auto-research skill for Claude Code: trigger ? to ask ChatGPT via Playwright, ?? to search the web",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "plugin",
+    "skill",
+    "chatgpt",
+    "playwright",
+    "research",
+    "automation"
+  ]
+}
