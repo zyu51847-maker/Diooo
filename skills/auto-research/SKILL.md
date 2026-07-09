@@ -38,7 +38,31 @@ description: Use when implementing tasks where design choices, algorithm details
 2. 导航、输入、抓取内容 — 用户可在 Edge 窗口实时看到
 3. 完毕后整理回答呈现，等用户裁决
 
-ChatGPT 输入框是 ProseMirror `div#prompt-textarea[contenteditable]`，用 `page.keyboard.type()` 填入文字，`data-testid="send-button"` 提交。
+### 性能优化
+
+| 优化 | 做法 | 效果 |
+|------|------|------|
+| **JS 注入文字** | `page.locator('#prompt-textarea').fill(text)` 替代 `keyboard.type()` | ~15s → ~0.1s |
+| **复用标签页** | 首次导航后保持页面，后续 `?` 直接复用已加载的 SPA | 节省 ~3-5s |
+
+### 交互 API
+
+```javascript
+// 填入文字（瞬间注入，比 keyboard.type() 快 100 倍）
+await page.locator('div#prompt-textarea').fill(prompt);
+
+// 点击发送
+await page.locator('[data-testid="send-button"]').click();
+
+// 等待回复（观察 DOM 变化或固定等待）
+await page.waitForSelector('[data-message-author-role="assistant"]');
+
+// 提取最后一条回复
+const response = await page.evaluate(() => {
+  const turns = document.querySelectorAll('[data-message-author-role="assistant"]');
+  return turns[turns.length - 1]?.textContent;
+});
+```
 
 ## 什么算"不确定"
 
