@@ -17,8 +17,18 @@ description: Use when implementing tasks where design choices, algorithm details
 
 | 输入 | 行为 |
 |------|------|
-| `?` | 确认去问 ChatGPT — 把当前讨论中形成的问题用 Playwright 打开 GPT 去问 |
+| `?` | **一键反馈给 GPT** — 把当前对话上下文（含 Claude 上一条输出）自动拿去问 ChatGPT，获取反馈/验证/改进建议 |
 | `??` | 搜索引擎调研 — WebSearch/WebFetch 查资料 |
+
+### `?` 的上下文拼接规则
+
+用户输入 `?` 时，将以下内容拼接成 ChatGPT prompt：
+
+1. 用户最近一条有意义的问题/指令
+2. Claude 最近一条输出（摘要 + 关键结论）
+3. 追问："请评估上述方案/输出的正确性、完整性和可改进之处"
+
+然后打开 ChatGPT → 输入 → 抓回答 → 呈现。
 
 ## Playwright 浏览器自动化流程
 
