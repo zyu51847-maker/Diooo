@@ -1,56 +1,114 @@
-# Auto-Research Plugin
+# Auto-Research Plugin · 自动研究插件
 
-让 Claude Code 在遇到不确定问题时，自动通过 ChatGPT（Playwright 浏览器）或搜索引擎调研，整理方案后等你裁决再动手。
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-blue)](https://claude.ai/code)
 
-## 触发词
+> **让 Claude Code 遇到不确定问题时，自动问 ChatGPT / 搜索网页，整理方案后等你拍板再动手。**
+>
+> Automatically research via ChatGPT (Playwright) or web search when uncertain — present options, wait for your approval, then code.
 
-| 输入 | 行为 |
-|------|------|
-| `?` | 确认去问 ChatGPT |
-| `??` | 搜索引擎调研 |
+---
 
-## 前置条件
-
-### 1. 安装 Playwright 浏览器扩展
-
-在 Edge 中打开以下链接，点击 **"添加到 Edge"**：
+## 🎬 效果演示
 
 ```
-https://chromewebstore.google.com/detail/playwright-extension/mmlmfjhmonkocbjadbfplnigmagldckm
-```
-
-### 2. 安装本插件
-
-```bash
-# 从本地目录安装
-claude plugins install ./auto-research-plugin
-
-# 或从 GitHub 安装（发布后）
-claude plugins install auto-research@your-marketplace
-```
-
-### 3. 批准 MCP Server
-
-首次使用时 Claude Code 会提示批准 Playwright MCP server，批准一次后全局生效。
-
-## 工作流示例
-
-```
-用户: PyTorch 中怎么自定义 ADMM 优化器？方案 A 还是 B？
-Claude: 建议问一下 GPT 对比，输入 ? 确认
-用户: ?
-Claude: [自动打开 ChatGPT → 输入问题 → 抓取回答 → 呈现方案]
-Claude: GPT 建议方案 A，原因是...。要继续实现吗？
+用户: ? PyTorch 中自定义 ADMM 优化器怎么设计
+Claude: [自动打开 ChatGPT → 输入问题 → 抓取回答 → 整理方案]
+Claude: GPT 建议方案 A，原因是 X Y Z。要继续实现吗？
 用户: 行
 Claude: [开始写代码]
 ```
 
-## 工作原理
+---
 
-- **Playwright MCP** 通过浏览器扩展直达用户 Edge，自动携带登录态
-- ChatGPT 页面通过 ProseMirror 编辑器交互
-- 回答自动提取呈现，用户全程可见浏览器操作
+## 🔧 触发词 / Triggers
 
-## 许可
+| 输入 | 行为 |
+|------|------|
+| `?` | **确认去问 ChatGPT** — 把当前问题用 Playwright 打开 GPT 去问 |
+| `??` | **搜索引擎调研** — WebSearch/WebFetch 查资料 |
+
+---
+
+## 📦 安装 / Installation
+
+### Prerequisites
+
+**1. 安装 Playwright 浏览器扩展（一次性）**
+
+在 Edge 中打开，点击 "添加到 Edge" / "Add to Edge"：
+
+> https://chromewebstore.google.com/detail/playwright-extension/mmlmfjhmonkocbjadbfplnigmagldckm
+
+Chrome 用户同理，点击 "添加至 Chrome"。
+
+**2. 安装本插件**
+
+```bash
+# GitHub 克隆安装
+git clone https://github.com/zyu51847-maker/Diooo.git auto-research-plugin
+claude plugins install ./auto-research-plugin
+```
+
+**3. 批准 MCP Server**
+
+首次使用 Claude Code 会提示批准 Playwright MCP — 点 Allow 即可，一次批准全局生效。
+
+---
+
+## 🛠️ 工作原理 / How It Works
+
+| 组件 | 说明 |
+|------|------|
+| **Playwright MCP** | 通过浏览器扩展直连 Edge/Chrome，自动携带登录态和 Cookie |
+| **ChatGPT** | ProseMirror 编辑器交互，`keyboard.type()` 输入，`data-testid="send-button"` 提交 |
+| **WebSearch** | 搜索引擎查博客、论文、开源项目 |
+| **WebFetch** | 抓取具体网页提炼关键信息 |
+
+全程在浏览器窗口可见，用户监控每一步操作。
+
+---
+
+## 📁 插件结构 / Structure
+
+```
+auto-research-plugin/
+├── .claude-plugin/
+│   └── plugin.json          # 插件元数据 + MCP 声明
+├── skills/
+│   └── auto-research/
+│       └── SKILL.md         # 核心行为规则
+├── .mcp.json                # Playwright MCP 参考配置
+├── package.json             # npm 打包信息
+└── README.md                # 本文件
+```
+
+---
+
+## 🚀 进阶安装 / Advanced
+
+从 GitHub 直接安装到全局：
+
+```bash
+claude plugins install https://github.com/zyu51847-maker/Diooo.git
+```
+
+或手动配置 MCP（不装插件，只配 MCP server）：
+
+```bash
+claude mcp add playwright -s user -- npx -y @playwright/mcp@latest --extension --browser msedge
+```
+
+---
+
+## 🌐 让别人发现 / Discovery
+
+- [Claude Code Plugin Marketplace](https://claude.ai/code)
+- [MCP Server Directory](https://glama.ai/mcp)
+- [MCP Server Directory 2](https://mcpserver.so)
+
+---
+
+## 📄 License
 
 MIT

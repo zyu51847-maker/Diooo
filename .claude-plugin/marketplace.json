@@ -1,0 +1,30 @@
+{
+  "name": "zyu51-auto-research",
+  "description": "Auto-research marketplace for Claude Code: trigger ? to ask ChatGPT via Playwright browser extension, ?? to search the web. 中文/English",
+  "owner": {
+    "name": "zyu51",
+    "email": "zyu51@example.com"
+  },
+  "plugins": [
+    {
+      "name": "auto-research",
+      "description": "自动研究技能：? 确认去问 ChatGPT，?? 搜索引擎调研。Automatically research via ChatGPT or web search, present options, wait for user approval before coding.",
+      "version": "1.0.0",
+      "source": "./",
+      "author": {
+        "name": "zyu51",
+        "email": "zyu51@example.com"
+      },
+      "keywords": [
+        "research",
+        "chatgpt",
+        "playwright",
+        "automation",
+        "decision-support",
+        "browser-extension",
+        "mcp-server",
+        "中文"
+      ]
+    }
+  ]
+}
