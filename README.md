@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-blue)](https://claude.ai/code)
 
-> **让 Claude Code 遇到不确定问题时，自动问 ChatGPT / 搜索网页，整理方案后等你拍板再动手。**
+> **让 Claude Code接入deepseekapi时 遇到不确定问题时，s输入 ： ？  自动问 ChatGPT / 搜索网页，整理方案后等你拍板再动手。**
 >
 > Automatically research via ChatGPT (Playwright) or web search when uncertain — present options, wait for your approval, then code.
 
